@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I nostri ricordi · 10 Maggio 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #fdf8f3;
+  --warm-white: #fefcf9;
+  --text-dark: #3a3530;
+  --text-mid: #5c534a;
+  --accent: #8a7968;
+  --accent-light: #c4b8a8;
+  --sage: #b8c4a8;
+  --blush: #e8ddd4;
+  --border: rgba(138,121,104,0.18);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  color: var(--text-dark);
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 10%, rgba(216,204,192,0.2) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 85%, rgba(184,196,168,0.15) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+.hero {
+  position: relative;
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  overflow: hidden;
+}
+
+.floral-hero-left, .floral-hero-right {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  pointer-events: none;
+  top: -20px;
+}
+.floral-hero-left  { left: -30px; transform: scaleX(-1); opacity: 0.5; }
+.floral-hero-right { right: -30px; opacity: 0.5; }
+
+.hero-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+  animation: fadeUp 0.9s ease both;
+}
+
+.hero-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(3rem, 8vw, 5rem);
+  color: var(--text-dark);
+  line-height: 1;
+  animation: fadeUp 0.9s 0.1s ease both;
+}
+
+.hero-sub {
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--text-mid);
+  letter-spacing: 0.04em;
+  animation: fadeUp 0.9s 0.2s ease both;
+}
+
+.hero-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem auto 0;
+  max-width: 320px;
+  animation: fadeUp 0.9s 0.3s ease both;
+}
+.hero-divider::before, .hero-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(138,121,104,0.4), transparent);
+}
+.hero-divider span { color: var(--accent); font-size: 0.55rem; letter-spacing: 0.5em; }
+
+/* ══════════════════════════════
+   UPLOAD SECTION
+══════════════════════════════ */
+.upload-section {
+  position: relative;
+  z-index: 1;
+  max-width: 520px;
+  margin: 2rem auto 0;
+  padding: 0 1.5rem;
+  animation: fadeUp 0.9s 0.4s ease both;
+}
+
+.upload-card {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 4px 24px rgba(90,75,60,0.07), 0 1px 4px rgba(90,75,60,0.05);
+  text-align: center;
+}
+
+.upload-icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.8rem;
+  display: block;
+  filter: sepia(0.3);
+}
+
+.upload-card h2 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2rem;
+  margin-bottom: 0.4rem;
+}
+
+.upload-card p {
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--text-mid);
+  font-weight: 300;
+  margin-bottom: 1.6rem;
+  line-height: 1.6;
+}
+
+/* Name input */
+.name-input {
+  width: 100%;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 0.7rem 1rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.name-input::placeholder { color: var(--accent-light); }
+.name-input:focus { border-color: var(--accent); }
+
+/* Drop zone */
+.drop-zone {
+  border: 1.5px dashed var(--accent-light);
+  border-radius: 3px;
+  padding: 2rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.25s;
+  background: rgba(253,248,243,0.6);
+  margin-bottom: 1.2rem;
+}
+.drop-zone:hover, .drop-zone.dragover {
+  border-color: var(--accent);
+  background: rgba(232,221,212,0.25);
+}
+.drop-zone-text {
+  font-size: 0.88rem;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  font-style: italic;
+}
+.drop-zone-sub {
+  font-size: 0.75rem;
+  color: var(--accent-light);
+  margin-top: 0.3rem;
+  letter-spacing: 0.04em;
+}
+
+#file-input { display: none; }
+
+/* Preview thumbnails */
+.preview-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+  min-height: 0;
+}
+.preview-thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  animation: popIn 0.3s ease;
+}
+.preview-video-thumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  background: var(--blush);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Upload button */
+.upload-btn {
+  width: 100%;
+  background: var(--text-dark);
+  color: var(--cream);
+  border: none;
+  border-radius: 2px;
+  padding: 0.9rem 2rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.upload-btn:hover:not(:disabled) {
+  background: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(90,75,60,0.2);
+}
+.upload-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Progress bar */
+.progress-wrap {
+  margin-top: 1rem;
+  display: none;
+}
+.progress-wrap.visible { display: block; }
+.progress-bar-bg {
+  height: 3px;
+  background: var(--blush);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  width: 0%;
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+.progress-label {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--accent);
+  margin-top: 0.4rem;
+  text-align: center;
+}
+
+/* Status message */
+.status-msg {
+  margin-top: 0.8rem;
+  font-size: 0.88rem;
+  font-style: italic;
+  min-height: 1.4em;
+  color: var(--accent);
+  text-align: center;
+}
+.status-msg.error { color: #c0705a; }
+.status-msg.success { color: #7a9e6e; }
+
+/* ══════════════════════════════
+   GALLERY
+══════════════════════════════ */
+.gallery-section {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 3.5rem auto 4rem;
+  padding: 0 1.5rem;
+}
+
+.gallery-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: fadeUp 0.9s 0.5s ease both;
+}
+.gallery-header h2 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.6rem;
+  margin-bottom: 0.3rem;
+}
+.gallery-header p {
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.gallery-grid {
+  columns: 3 200px;
+  column-gap: 0.8rem;
+}
+
+.gallery-item {
+  break-inside: avoid;
+  margin-bottom: 0.8rem;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(90,75,60,0.1);
+  animation: fadeUp 0.5s ease both;
+  cursor: pointer;
+  position: relative;
+}
+.gallery-item img, .gallery-item video {
+  width: 100%;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.gallery-item:hover img, .gallery-item:hover video {
+  transform: scale(1.03);
+}
+.gallery-item-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(58,53,48,0.55), transparent);
+  color: rgba(255,255,255,0.9);
+  font-size: 0.75rem;
+  font-style: italic;
+  padding: 0.6rem 0.6rem 0.4rem;
+  letter-spacing: 0.03em;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.gallery-item:hover .gallery-item-label { opacity: 1; }
+
+.gallery-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--accent-light);
+  font-style: italic;
+  font-size: 1rem;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(35,30,26,0.92);
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.lightbox.open { display: flex; }
+.lightbox-inner {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+.lightbox-inner img, .lightbox-inner video {
+  max-width: 100%;
+  max-height: 88vh;
+  border-radius: 2px;
+  display: block;
+}
+.lightbox-close {
+  position: absolute;
+  top: -2.5rem;
+  right: 0;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.7);
+  font-size: 1.5rem;
+  cursor: pointer;
+  font-family: 'Cormorant Garamond', serif;
+  letter-spacing: 0.1em;
+}
+.lightbox-name {
+  text-align: center;
+  color: rgba(255,255,255,0.55);
+  font-style: italic;
+  font-size: 0.85rem;
+  margin-top: 0.6rem;
+}
+
+/* ══════════════════════════════
+   SETUP BANNER (shown before config)
+══════════════════════════════ */
+.setup-banner {
+  background: linear-gradient(135deg, #f5ede4, #ede5da);
+  border: 1px solid rgba(138,121,104,0.25);
+  border-radius: 3px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.4rem;
+  font-size: 0.82rem;
+  color: var(--text-mid);
+  line-height: 1.7;
+  text-align: left;
+}
+.setup-banner strong { color: var(--text-dark); font-weight: 600; }
+.setup-banner code {
+  background: rgba(138,121,104,0.12);
+  padding: 0.1em 0.4em;
+  border-radius: 2px;
+  font-size: 0.8rem;
+  font-family: monospace;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid { columns: 2 120px; }
+  .floral-hero-left, .floral-hero-right { width: 140px; height: 140px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════ HERO ════════════════ -->
+<div class="hero">
+  <!-- Floral left -->
+  <div class="floral-hero-left">
+    <svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="140" cy="70" r="26" fill="#e8ddd4" opacity="0.65"/>
+      <circle cx="162" cy="50" r="19" fill="#ddd0c8" opacity="0.6"/>
+      <circle cx="118" cy="48" r="22" fill="#e2d8d0" opacity="0.55"/>
+      <circle cx="170" cy="80" r="16" fill="#d8cec6" opacity="0.55"/>
+      <circle cx="145" cy="34" r="12" fill="#ddd2ca" opacity="0.5"/>
+      <circle cx="124" cy="28" r="10" fill="#e0d6ce" opacity="0.45"/>
+      <circle cx="178" cy="62" r="12" fill="#d6ccc4" opacity="0.5"/>
+      <circle cx="152" cy="92" r="11" fill="#ddd4cc" opacity="0.45"/>
+      <circle cx="100" cy="62" r="9"  fill="#e4dbd3" opacity="0.4"/>
+      <ellipse cx="100" cy="90" rx="22" ry="10" fill="#c8d4b8" opacity="0.6" transform="rotate(-35 100 90)"/>
+      <ellipse cx="182" cy="96" rx="17" ry="8"  fill="#c4d0b4" opacity="0.5" transform="rotate(18 182 96)"/>
+      <ellipse cx="114" cy="108" rx="20" ry="8" fill="#becca8" opacity="0.45" transform="rotate(-55 114 108)"/>
+      <path d="M 128 95 Q 115 115 105 130" stroke="#b8c4a0" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <path d="M 156 88 Q 162 110 160 130" stroke="#b8c4a0" stroke-width="1.2" fill="none" opacity="0.45"/>
+      <path d="M 175 95 Q 185 112 180 130" stroke="#b8c4a0" stroke-width="1"   fill="none" opacity="0.35"/>
+    </svg>
+  </div>
+  <!-- Floral right -->
+  <div class="floral-hero-right">
+    <svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="140" cy="70" r="26" fill="#e8ddd4" opacity="0.65"/>
+      <circle cx="162" cy="50" r="19" fill="#ddd0c8" opacity="0.6"/>
+      <circle cx="118" cy="48" r="22" fill="#e2d8d0" opacity="0.55"/>
+      <circle cx="170" cy="80" r="16" fill="#d8cec6" opacity="0.55"/>
+      <circle cx="145" cy="34" r="12" fill="#ddd2ca" opacity="0.5"/>
+      <circle cx="124" cy="28" r="10" fill="#e0d6ce" opacity="0.45"/>
+      <circle cx="178" cy="62" r="12" fill="#d6ccc4" opacity="0.5"/>
+      <circle cx="152" cy="92" r="11" fill="#ddd4cc" opacity="0.45"/>
+      <ellipse cx="100" cy="90" rx="22" ry="10" fill="#c8d4b8" opacity="0.6" transform="rotate(-35 100 90)"/>
+      <ellipse cx="182" cy="96" rx="17" ry="8"  fill="#c4d0b4" opacity="0.5" transform="rotate(18 182 96)"/>
+      <path d="M 128 95 Q 115 115 105 130" stroke="#b8c4a0" stroke-width="1.5" fill="none" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <p class="hero-eyebrow">10 · Maggio · 2026</p>
+  <h1 class="hero-title">Il Nostro Matrimonio</h1>
+  <p class="hero-sub">Valeria & Valerio</p>
+  <p class="hero-sub" style="font-size:0.88rem;margin-top:0.3rem;">Condividi i tuoi momenti con noi</p>
+  <div class="hero-divider"><span>✦ ✦ ✦</span></div>
+</div>
+
+<!-- ════════════════ UPLOAD ════════════════ -->
+<div class="upload-section">
+  <div class="upload-card">
+
+    <!-- Setup instructions banner (visible until configured) -->
+    <div class="setup-banner" id="setup-banner">
+      ⚙️ <strong>Configurazione rapida</strong> — Prima di pubblicare, apri questo file e sostituisci tre valori in cima allo script:<br><br>
+      <code>CLIENT_ID</code> → il tuo Google OAuth Client ID<br>
+      <code>FOLDER_ID</code> → l'ID della cartella Google Drive<br>
+      <code>API_KEY</code> → la tua Google API Key<br><br>
+      Vedi le istruzioni complete in fondo alla pagina.
+    </div>
+
+    <span class="upload-icon">🌸</span>
+    <h2>Carica un ricordo</h2>
+    <p>Carica le tue foto dal telefono —<br>le vedremo tutti insieme qui sotto</p>
+
+    <input type="text" class="name-input" id="uploader-name" placeholder="Il tuo nome (es. Marco e Sofia)" maxlength="40">
+
+    <div class="drop-zone" id="drop-zone">
+      <input type="file" id="file-input" accept="image/*" multiple>
+      <p class="drop-zone-text">Tocca per scegliere le tue foto</p>
+      <p class="drop-zone-sub">oppure trascinale qui · JPG, PNG, HEIC</p>
+    </div>
+
+    <div class="preview-strip" id="preview-strip"></div>
+
+    <button class="upload-btn" id="upload-btn" disabled>Carica le tue foto</button>
+
+    <div class="progress-wrap" id="progress-wrap">
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill"></div></div>
+      <p class="progress-label" id="progress-label">Caricamento in corso…</p>
+    </div>
+
+    <p class="status-msg" id="status-msg"></p>
+  </div>
+</div>
+
+<!-- ════════════════ GALLERY ════════════════ -->
+<div class="gallery-section">
+  <div class="gallery-header">
+    <h2>La galleria</h2>
+    <p>I momenti condivisi dagli ospiti</p>
+  </div>
+  <div class="gallery-grid" id="gallery-grid">
+    <div class="gallery-empty" id="gallery-empty">
+      Nessuna foto ancora — sii il primo a condividere un ricordo 🌿
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ LIGHTBOX ════════════════ -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" id="lightbox-close">✕ chiudi</button>
+    <div id="lightbox-content"></div>
+    <p class="lightbox-name" id="lightbox-name"></p>
+  </div>
+</div>
+
+
+
+<script>
+// ══════════════════════════════════════════
+//  ⚙️  CONFIGURAZIONE — modifica questi 3 valori
+// ══════════════════════════════════════════
+const CLIENT_ID = "85335571723-j88qnhuo8ulbqir9ald87mnugcdm4md7.apps.googleusercontent.com";
+const FOLDER_ID = "1SaUt2sNZ2thN0_Sd9Ij3omYMncShFfhz";
+const API_KEY   = "AIzaSyCXs1o9ZoG3ITHgdfnNutxqxCTEmkJv3fM";
+// ══════════════════════════════════════════
+
+const SCOPES = "https://www.googleapis.com/auth/drive.file";
+const DISCOVERY = "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest";
+
+let gapiReady = false;
+let selectedFiles = [];
+let galleryItems = [];
+
+// ── Load Google API ──
+function loadGapi() {
+  const s = document.createElement('script');
+  s.src = "https://apis.google.com/js/api.js";
+  s.onload = () => {
+    gapi.load('client:auth2', async () => {
+      try {
+        await gapi.client.init({ apiKey: API_KEY, clientId: CLIENT_ID, discoveryDocs: [DISCOVERY], scope: SCOPES });
+        gapiReady = true;
+        // If already signed in, load gallery
+        if (gapi.auth2.getAuthInstance().isSignedIn.get()) loadGallery();
+      } catch(e) { console.warn("Google API init:", e); }
+    });
+  };
+  document.head.appendChild(s);
+}
+
+// ── Hide setup banner if configured ──
+if (CLIENT_ID !== "TUO_CLIENT_ID_QUI.apps.googleusercontent.com") {
+  document.getElementById('setup-banner').style.display = 'none';
+}
+
+// ── File selection ──
+const dropZone  = document.getElementById('drop-zone');
+const fileInput = document.getElementById('file-input');
+const preview   = document.getElementById('preview-strip');
+const uploadBtn = document.getElementById('upload-btn');
+const nameInput = document.getElementById('uploader-name');
+
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
+fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+nameInput.addEventListener('input', updateBtn);
+
+function handleFiles(files) {
+  selectedFiles = [...files];
+  preview.innerHTML = '';
+  selectedFiles.forEach(f => {
+    if (f.type.startsWith('image/')) {
+      const img = document.createElement('img');
+      img.className = 'preview-thumb';
+      img.src = URL.createObjectURL(f);
+      preview.appendChild(img);
+    } else {
+      const div = document.createElement('div');
+      div.className = 'preview-video-thumb';
+      div.textContent = '🎬';
+      preview.appendChild(div);
+    }
+  });
+  updateBtn();
+}
+
+function updateBtn() {
+  uploadBtn.disabled = selectedFiles.length === 0 || nameInput.value.trim() === '';
+}
+
+// ── Upload ──
+uploadBtn.addEventListener('click', async () => {
+  if (!gapiReady) { setStatus("Connessione a Google in corso…", ''); await ensureSignIn(); return; }
+  await ensureSignIn();
+  uploadFiles();
+});
+
+async function ensureSignIn() {
+  if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
+    await gapi.auth2.getAuthInstance().signIn();
+  }
+}
+
+async function uploadFiles() {
+  uploadBtn.disabled = true;
+  const progressWrap = document.getElementById('progress-wrap');
+  const progressFill = document.getElementById('progress-fill');
+  const progressLabel = document.getElementById('progress-label');
+  progressWrap.classList.add('visible');
+
+  const name = nameInput.value.trim();
+  let uploaded = 0;
+
+  for (const file of selectedFiles) {
+    setStatus(`Caricamento ${uploaded + 1} di ${selectedFiles.length}…`, '');
+    try {
+      const token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
+      await uploadToGDrive(file, name, token);
+      uploaded++;
+      const pct = Math.round((uploaded / selectedFiles.length) * 100);
+      progressFill.style.width = pct + '%';
+      progressLabel.textContent = `${pct}% — ${uploaded} di ${selectedFiles.length}`;
+    } catch(e) {
+      setStatus("Errore nel caricamento. Riprova.", 'error');
+      uploadBtn.disabled = false;
+      return;
+    }
+  }
+
+  setStatus("✓ Caricamento completato! Grazie " + name + " 🌸", 'success');
+  selectedFiles = [];
+  preview.innerHTML = '';
+  fileInput.value = '';
+  nameInput.value = '';
+  updateBtn();
+  setTimeout(() => { progressWrap.classList.remove('visible'); progressFill.style.width = '0%'; }, 2000);
+
+  // Reload gallery
+  setTimeout(loadGallery, 1500);
+}
+
+async function uploadToGDrive(file, uploaderName, token) {
+  const ext = file.name.split('.').pop();
+  const newName = `${uploaderName} · ${new Date().toLocaleTimeString('it-IT', {hour:'2-digit',minute:'2-digit'})} · ${Date.now()}.${ext}`;
+  const metadata = { name: newName, parents: [FOLDER_ID] };
+  const form = new FormData();
+  form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+  form.append('file', file);
+
+  const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name,mimeType,thumbnailLink,webContentLink', {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + token },
+    body: form
+  });
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}
+
+// ── Gallery ──
+async function loadGallery() {
+  try {
+    if (!gapiReady) return;
+    if (!gapi.auth2.getAuthInstance().isSignedIn.get()) return;
+
+    const res = await gapi.client.drive.files.list({
+      q: `'${FOLDER_ID}' in parents and trashed = false`,
+      fields: 'files(id,name,mimeType,thumbnailLink)',
+      orderBy: 'createdTime desc',
+      pageSize: 50
+    });
+
+    const files = res.result.files || [];
+    renderGallery(files);
+  } catch(e) { console.warn("Gallery load:", e); }
+}
+
+function renderGallery(files) {
+  const grid = document.getElementById('gallery-grid');
+  const empty = document.getElementById('gallery-empty');
+  if (files.length === 0) { empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+
+  // Only add new items
+  const existingIds = new Set(galleryItems.map(f => f.id));
+  const newFiles = files.filter(f => !existingIds.has(f.id));
+  galleryItems = files;
+
+  newFiles.forEach(f => {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.style.animationDelay = Math.random() * 0.3 + 's';
+
+    // Extract uploader name from filename
+    const namePart = f.name.split(' · ')[0] || '';
+
+    if (f.mimeType.startsWith('image/') && f.thumbnailLink) {
+      const img = document.createElement('img');
+      img.src = f.thumbnailLink.replace('=s220', '=s800');
+      img.alt = f.name;
+      img.loading = 'lazy';
+      item.appendChild(img);
+    } else if (f.mimeType.startsWith('video/')) {
+      const placeholder = document.createElement('div');
+      placeholder.style.cssText = "background:var(--blush);height:140px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;";
+      placeholder.textContent = '🎬';
+      item.appendChild(placeholder);
+    } else {
+      return;
+    }
+
+    if (namePart) {
+      const label = document.createElement('div');
+      label.className = 'gallery-item-label';
+      label.textContent = namePart;
+      item.appendChild(label);
+    }
+
+    item.addEventListener('click', () => openLightbox(f));
+    grid.insertBefore(item, grid.firstChild);
+  });
+}
+
+// Auto-refresh gallery every 30s
+setInterval(() => { if (gapiReady && gapi.auth2.getAuthInstance().isSignedIn.get()) loadGallery(); }, 30000);
+
+// ── Lightbox ──
+function openLightbox(file) {
+  const lb = document.getElementById('lightbox');
+  const content = document.getElementById('lightbox-content');
+  const lbName = document.getElementById('lightbox-name');
+  content.innerHTML = '';
+
+  const namePart = file.name.split(' · ')[0] || '';
+  lbName.textContent = namePart ? 'da ' + namePart : '';
+
+  if (file.mimeType.startsWith('image/') && file.thumbnailLink) {
+    const img = document.createElement('img');
+    img.src = file.thumbnailLink.replace('=s220', '=s1600');
+    content.appendChild(img);
+  } else {
+    const p = document.createElement('p');
+    p.style.cssText = "color:rgba(255,255,255,0.7);font-style:italic;font-size:1rem;padding:2rem;";
+    p.textContent = '🎬 Apri il video su Google Drive per vederlo';
+    content.appendChild(p);
+  }
+
+  lb.classList.add('open');
+}
+
+document.getElementById('lightbox-close').addEventListener('click', () => document.getElementById('lightbox').classList.remove('open'));
+document.getElementById('lightbox').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
+
+// ── Status helper ──
+function setStatus(msg, type) {
+  const el = document.getElementById('status-msg');
+  el.textContent = msg;
+  el.className = 'status-msg' + (type ? ' ' + type : '');
+}
+
+// ── Init ──
+loadGapi();
+</script>
+</body>
+</html>
