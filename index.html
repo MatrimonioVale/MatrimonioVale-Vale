@@ -92,8 +92,31 @@ body::before { content: ''; position: fixed; inset: 0; background: radial-gradie
   <h1 class="hero-title">Il Nostro Matrimonio</h1>
   <p class="hero-names">Valeria & Valerio</p>
   <p class="hero-sub">Condividi i tuoi momenti con noi</p>
+  <div style="margin-top:1.4rem;">
+    <button onclick="document.getElementById('menu-popup').classList.add('open')" style="display:inline-flex;align-items:center;gap:0.5rem;background:transparent;border:1px solid var(--accent);color:var(--accent);padding:0.65rem 1.6rem;border-radius:2px;font-family:'Cormorant Garamond',serif;font-size:0.88rem;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:all 0.25s;" onmouseover="this.style.background='var(--accent)';this.style.color='var(--cream)'" onmouseout="this.style.background='transparent';this.style.color='var(--accent)'">
+      🌿 &nbsp;Scopri il menù
+    </button>
+  </div>
   <div class="hero-divider"><span>✦ ✦ ✦</span></div>
 </div>
+
+<!-- MENU POPUP -->
+<div id="menu-popup" style="display:none;position:fixed;inset:0;background:rgba(35,30,26,0.88);z-index:200;align-items:center;justify-content:center;padding:1.5rem;" onclick="if(event.target===this)this.classList.remove('open')">
+  <div style="background:var(--warm-white);max-width:420px;width:100%;border-radius:3px;padding:2.5rem 2rem;position:relative;text-align:center;max-height:90vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,0.3);">
+    <button onclick="document.getElementById('menu-popup').classList.remove('open')" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--accent);font-size:1.2rem;cursor:pointer;font-family:'Cormorant Garamond',serif;">✕</button>
+    <p style="font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;">10 · Maggio · 2026</p>
+    <h2 style="font-family:'Great Vibes',cursive;font-size:3rem;line-height:1;margin-bottom:1.8rem;">Menu</h2>
+    <p style="font-family:'Great Vibes',cursive;font-size:1.7rem;margin-bottom:0.4rem;">prima portata</p>
+    <p style="font-size:0.95rem;font-style:italic;font-weight:300;color:var(--text-mid);line-height:1.7;max-width:300px;margin:0 auto;">Millefoglie all'uovo con ragout di chianina, fonduta al timo, crema di costoluto e pesto di basilico</p>
+    <div style="display:flex;align-items:center;gap:0.8rem;margin:1.4rem 0;"><div style="flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(138,121,104,0.3),transparent);"></div><span style="color:var(--accent);font-size:0.5rem;letter-spacing:0.4em;">✦ ✦ ✦</span><div style="flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(138,121,104,0.3),transparent);"></div></div>
+    <p style="font-family:'Great Vibes',cursive;font-size:1.7rem;margin-bottom:0.4rem;">seconda portata</p>
+    <p style="font-size:0.95rem;font-style:italic;font-weight:300;color:var(--text-mid);line-height:1.7;max-width:300px;margin:0 auto;">Risotto al Castelmagno, rosmarino e polvere di zafferano</p>
+    <div style="display:flex;align-items:center;gap:0.8rem;margin:1.4rem 0;"><div style="flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(138,121,104,0.3),transparent);"></div><span style="color:var(--accent);font-size:0.5rem;letter-spacing:0.4em;">✦ ✦ ✦</span><div style="flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(138,121,104,0.3),transparent);"></div></div>
+    <p style="font-family:'Great Vibes',cursive;font-size:1.7rem;margin-bottom:0.4rem;">terza portata</p>
+    <p style="font-size:0.95rem;font-style:italic;font-weight:300;color:var(--text-mid);line-height:1.7;max-width:300px;margin:0 auto;">Vitello à la royale glassato al miele con salsa di fichi e prugne, soffice di patate e chips di sedano rapa</p>
+  </div>
+</div>
+<style>#menu-popup.open{display:flex!important;}</style>
 
 <div class="upload-section">
   <div class="upload-card">
