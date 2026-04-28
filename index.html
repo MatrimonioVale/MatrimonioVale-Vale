@@ -16,8 +16,10 @@ html { scroll-behavior: smooth; }
 body { background: var(--cream); font-family: 'Cormorant Garamond', Georgia, serif; color: var(--text-dark); min-height: 100vh; }
 body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse at 15% 10%, rgba(216,204,192,0.2) 0%, transparent 55%), radial-gradient(ellipse at 85% 85%, rgba(184,196,168,0.15) 0%, transparent 50%); pointer-events: none; z-index: 0; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes popIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+@keyframes popIn { from { opacity: 0; transform: scale(0.88) rotate(var(--rot)); } to { opacity: 1; transform: scale(1) rotate(var(--rot)); } }
+@keyframes likeHeart { 0% { transform: scale(1); } 30% { transform: scale(1.35); } 60% { transform: scale(0.9); } 100% { transform: scale(1); } }
 
+/* ── HERO ── */
 .hero { position: relative; text-align: center; padding: 4rem 2rem 2.5rem; overflow: hidden; }
 .floral { position: absolute; width: 200px; height: 200px; pointer-events: none; top: -15px; opacity: 0.5; }
 .floral-l { left: -25px; transform: scaleX(-1); }
@@ -30,6 +32,7 @@ body::before { content: ''; position: fixed; inset: 0; background: radial-gradie
 .hero-divider::before, .hero-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(138,121,104,0.4), transparent); }
 .hero-divider span { color: var(--accent); font-size: 0.55rem; letter-spacing: 0.5em; }
 
+/* ── UPLOAD ── */
 .upload-section { position: relative; z-index: 1; max-width: 500px; margin: 2rem auto 0; padding: 0 1.5rem; animation: fadeUp 0.9s 0.4s ease both; }
 .upload-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 3px; padding: 2.2rem 1.8rem; box-shadow: 0 4px 24px rgba(90,75,60,0.07); text-align: center; }
 .upload-icon { font-size: 2rem; margin-bottom: 0.7rem; display: block; }
@@ -57,18 +60,94 @@ body::before { content: ''; position: fixed; inset: 0; background: radial-gradie
 .status-msg.error { color: #c0705a; }
 .status-msg.success { color: #7a9e6e; }
 
-.gallery-section { position: relative; z-index: 1; max-width: 900px; margin: 3.5rem auto 4rem; padding: 0 1.2rem; }
+/* ── GALLERY ── */
+.gallery-section { position: relative; z-index: 1; max-width: 960px; margin: 3.5rem auto 4rem; padding: 0 1.2rem; }
 .gallery-header { text-align: center; margin-bottom: 2rem; }
 .gallery-header h2 { font-family: 'Great Vibes', cursive; font-size: 2.6rem; margin-bottom: 0.2rem; }
 .gallery-header p { font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
-.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; }
-.gallery-item { border-radius: 2px; overflow: hidden; box-shadow: 0 2px 8px rgba(90,75,60,0.1); animation: popIn 0.4s ease both; cursor: pointer; position: relative; aspect-ratio: 1; }
-.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
-.gallery-item:hover img { transform: scale(1.04); }
-.gallery-item-label { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(58,53,48,0.6), transparent); color: rgba(255,255,255,0.9); font-size: 0.72rem; font-style: italic; padding: 0.5rem 0.5rem 0.3rem; opacity: 0; transition: opacity 0.25s; }
-.gallery-item:hover .gallery-item-label { opacity: 1; }
+
+/* ── POLAROID GRID ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  padding: 1rem 0.5rem;
+}
+
+/* ── POLAROID ITEM ── */
+.polaroid {
+  background: white;
+  padding: 0.7rem 0.7rem 2.2rem;
+  box-shadow: 0 3px 12px rgba(90,75,60,0.15), 0 1px 3px rgba(90,75,60,0.1);
+  cursor: pointer;
+  position: relative;
+  --rot: 0deg;
+  transform: rotate(var(--rot));
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: popIn 0.5s ease both;
+}
+.polaroid:hover {
+  transform: rotate(0deg) scale(1.04);
+  box-shadow: 0 8px 28px rgba(90,75,60,0.22);
+  z-index: 2;
+}
+.polaroid-img-wrap {
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--blush);
+}
+.polaroid-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s;
+}
+.polaroid:hover .polaroid-img-wrap img { transform: scale(1.05); }
+
+.polaroid-name {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.05rem;
+  color: var(--text-mid);
+  text-align: center;
+  margin-top: 0.5rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── LIKE BUTTON ── */
+.like-btn {
+  position: absolute;
+  bottom: 0.35rem;
+  right: 0.6rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.2rem;
+  font-family: 'Cormorant Garamond', serif;
+}
+.like-heart {
+  font-size: 1rem;
+  transition: all 0.2s;
+  display: inline-block;
+}
+.like-heart.liked { animation: likeHeart 0.4s ease; }
+.like-count {
+  font-size: 0.72rem;
+  color: var(--accent);
+  font-style: italic;
+  min-width: 12px;
+}
+.like-btn.liked .like-heart { filter: none; }
+
 .gallery-empty { text-align: center; padding: 3rem 1rem; color: var(--accent-light); font-style: italic; grid-column: 1/-1; }
 
+/* ── LIGHTBOX ── */
 .lightbox { position: fixed; inset: 0; background: rgba(30,25,22,0.93); z-index: 100; display: none; align-items: center; justify-content: center; padding: 1rem; }
 .lightbox.open { display: flex; }
 .lightbox-inner { position: relative; max-width: 92vw; max-height: 92vh; text-align: center; }
@@ -77,7 +156,11 @@ body::before { content: ''; position: fixed; inset: 0; background: radial-gradie
 .lightbox-name { color: rgba(255,255,255,0.5); font-style: italic; font-size: 0.82rem; margin-top: 0.5rem; }
 
 #menu-popup.open { display: flex !important; }
-@media (max-width: 480px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } .floral { width: 130px; height: 130px; } }
+@media (max-width: 480px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+  .floral { width: 130px; height: 130px; }
+  .polaroid-name { font-size: 0.9rem; }
+}
 </style>
 </head>
 <body>
@@ -118,6 +201,7 @@ body::before { content: ''; position: fixed; inset: 0; background: radial-gradie
   </div>
 </div>
 
+<!-- UPLOAD -->
 <div class="upload-section">
   <div class="upload-card">
     <span class="upload-icon">🌸</span>
@@ -139,6 +223,7 @@ body::before { content: ''; position: fixed; inset: 0; background: radial-gradie
   </div>
 </div>
 
+<!-- GALLERY -->
 <div class="gallery-section">
   <div class="gallery-header">
     <h2>La galleria</h2>
@@ -149,6 +234,7 @@ body::before { content: ''; position: fixed; inset: 0; background: radial-gradie
   </div>
 </div>
 
+<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <div class="lightbox-inner">
     <button class="lightbox-close" id="lightbox-close">✕ chiudi</button>
@@ -159,14 +245,24 @@ body::before { content: ''; position: fixed; inset: 0; background: radial-gradie
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL  = "https://xlphpvuqwjayfutmolef.supabase.co";
-const SUPABASE_KEY  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGhwdnVxd2pheWZ1dG1vbGVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjE0NjMsImV4cCI6MjA5Mjg5NzQ2M30.1e_cfGOFZs-5PKxlEXm10bo59ghuWkVb-P1T_1TzTRs";
-const BUCKET        = "Foto";
+const SUPABASE_URL = "https://xlphpvuqwjayfutmolef.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhscGhwdnVxd2pheWZ1dG1vbGVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjE0NjMsImV4cCI6MjA5Mjg5NzQ2M30.1e_cfGOFZs-5PKxlEXm10bo59ghuWkVb-P1T_1TzTRs";
+const BUCKET = "Foto";
 
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
+// Session ID for like tracking
+const SESSION_ID = localStorage.getItem('session_id') || (() => {
+  const id = Math.random().toString(36).slice(2);
+  localStorage.setItem('session_id', id);
+  return id;
+})();
+
+let likesCache = {}; // { photoPath: count }
+let likedByMe = JSON.parse(localStorage.getItem('liked_photos') || '{}');
 let selectedFiles = [];
+
 const dropZone  = document.getElementById('drop-zone');
 const fileInput = document.getElementById('file-input');
 const preview   = document.getElementById('preview-strip');
@@ -196,6 +292,27 @@ function updateBtn() {
   uploadBtn.disabled = selectedFiles.length === 0 || nameInput.value.trim() === '';
 }
 
+// Compress image
+async function compressImage(file) {
+  return new Promise(resolve => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      const MAX = 1200;
+      let w = img.width, h = img.height;
+      if (w > MAX || h > MAX) {
+        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+        else { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      canvas.toBlob(blob => { URL.revokeObjectURL(url); resolve(blob); }, 'image/jpeg', 0.82);
+    };
+    img.src = url;
+  });
+}
+
 uploadBtn.addEventListener('click', uploadFiles);
 
 async function uploadFiles() {
@@ -211,100 +328,17 @@ async function uploadFiles() {
   for (const file of selectedFiles) {
     setStatus(`Caricamento ${uploaded + 1} di ${selectedFiles.length}…`, '');
     try {
-      const ext = file.name.split('.').pop();
-      const fileName = `${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+      const compressed = await compressImage(file);
+      const fileName = `${Date.now()}_${Math.random().toString(36).slice(2)}.jpg`;
       const filePath = `${name.replace(/[^a-zA-Z0-9]/g, '_')}/${fileName}`;
 
-      const { error } = await db.storage.from(BUCKET).upload(filePath, file, {
-        cacheControl: '3600',
-        upsert: false,
-        metadata: { uploader: name }
+      const { error } = await db.storage.from(BUCKET).upload(filePath, compressed, {
+        cacheControl: '3600', upsert: false, contentType: 'image/jpeg'
       });
-
       if (error) throw error;
 
       const { data: urlData } = db.storage.from(BUCKET).getPublicUrl(filePath);
-      addToGallery(urlData.publicUrl, name);
+      addPolaroid(urlData.publicUrl, name, filePath, 0, false);
       uploaded++;
       pf.style.width = Math.round((uploaded / selectedFiles.length) * 100) + '%';
-      pl.textContent = `${uploaded} di ${selectedFiles.length} foto caricate`;
-    } catch(e) {
-      setStatus('Errore nel caricamento. Riprova.', 'error');
-      uploadBtn.disabled = false;
-      return;
-    }
-  }
-
-  setStatus(`✓ Grazie ${name}! Le tue foto sono nella galleria 🌸`, 'success');
-  selectedFiles = []; preview.innerHTML = ''; fileInput.value = ''; nameInput.value = '';
-  updateBtn();
-  setTimeout(() => { pw.classList.remove('visible'); pf.style.width = '0%'; }, 2500);
-}
-
-function addToGallery(url, name) {
-  document.getElementById('gallery-empty').style.display = 'none';
-  const grid = document.getElementById('gallery-grid');
-  const item = document.createElement('div');
-  item.className = 'gallery-item';
-  const img = document.createElement('img');
-  img.src = url;
-  img.alt = name;
-  img.loading = 'lazy';
-  const label = document.createElement('div');
-  label.className = 'gallery-item-label';
-  label.textContent = name;
-  item.appendChild(img);
-  item.appendChild(label);
-  item.addEventListener('click', () => openLightbox(url, name));
-  grid.insertBefore(item, grid.firstChild);
-}
-
-async function loadGallery() {
-  try {
-    const { data, error } = await db.storage.from(BUCKET).list('', {
-      limit: 200, sortBy: { column: 'created_at', order: 'desc' }
-    });
-    if (error || !data) return;
-
-    const files = data.filter(f => f.name !== '.emptyFolderPlaceholder');
-    if (files.length > 0) document.getElementById('gallery-empty').style.display = 'none';
-
-    // Load all subfolders
-    for (const folder of files) {
-      const { data: subFiles } = await db.storage.from(BUCKET).list(folder.name, {
-        limit: 100, sortBy: { column: 'created_at', order: 'desc' }
-      });
-      if (!subFiles) continue;
-      const uploaderName = folder.name.replace(/_/g, ' ');
-      subFiles.forEach(f => {
-        const { data: urlData } = db.storage.from(BUCKET).getPublicUrl(`${folder.name}/${f.name}`);
-        addToGallery(urlData.publicUrl, uploaderName);
-      });
-    }
-  } catch(e) { console.log('Gallery load error:', e); }
-}
-
-function openLightbox(url, name) {
-  document.getElementById('lightbox-img').src = url;
-  document.getElementById('lightbox-name').textContent = name ? 'da ' + name : '';
-  document.getElementById('lightbox').classList.add('open');
-}
-document.getElementById('lightbox-close').addEventListener('click', () => document.getElementById('lightbox').classList.remove('open'));
-document.getElementById('lightbox').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('open'); });
-
-function setStatus(msg, type) {
-  const el = document.getElementById('status-msg');
-  el.textContent = msg; el.className = 'status-msg' + (type ? ' ' + type : '');
-}
-
-// Realtime subscription per nuove foto
-db.channel('storage-changes')
-  .on('postgres_changes', { event: 'INSERT', schema: 'storage', table: 'objects' }, payload => {
-    if (payload.new.bucket_id === BUCKET) loadGallery();
-  })
-  .subscribe();
-
-loadGallery();
-</script>
-</body>
-</html>
+      pl.textCont
