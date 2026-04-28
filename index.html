@@ -41,10 +41,10 @@ body::before { content: ''; position: fixed; inset: 0; background: radial-gradie
 .name-input { width: 100%; background: var(--cream); border: 1px solid var(--border); border-radius: 2px; padding: 0.65rem 1rem; font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: var(--text-dark); margin-bottom: 1rem; outline: none; transition: border-color 0.2s; }
 .name-input::placeholder { color: var(--accent-light); }
 .name-input:focus { border-color: var(--accent); }
-.drop-zone { border: 1.5px dashed var(--accent-light); border-radius: 3px; padding: 1.8rem 1rem; cursor: pointer; transition: all 0.25s; background: rgba(253,248,243,0.6); margin-bottom: 1rem; }
+.drop-zone { display: block; border: 1.5px dashed var(--accent-light); border-radius: 3px; padding: 1.8rem 1rem; cursor: pointer; transition: all 0.25s; background: rgba(253,248,243,0.6); margin-bottom: 1rem; text-align: center; width: 100%; }
 .drop-zone:hover, .drop-zone.dragover { border-color: var(--accent); background: rgba(232,221,212,0.2); }
-.drop-zone-text { font-size: 0.88rem; color: var(--accent); font-style: italic; }
-.drop-zone-sub { font-size: 0.75rem; color: var(--accent-light); margin-top: 0.25rem; }
+.drop-zone-text { font-size: 0.88rem; color: var(--accent); font-style: italic; display: block; }
+.drop-zone-sub { font-size: 0.75rem; color: var(--accent-light); margin-top: 0.25rem; display: block; }
 #file-input { display: none; }
 .preview-strip { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; }
 .preview-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 2px; border: 1px solid var(--border); animation: popIn 0.3s ease; }
@@ -338,6 +338,4 @@ async function uploadFiles() {
       if (error) throw error;
 
       const { data: urlData } = db.storage.from(BUCKET).getPublicUrl(filePath);
-      addPolaroid(urlData.publicUrl, name, filePath, 0, false);
-      uploaded++;
-      pf.style.width = Math.round((uploaded / selectedFil
+      addPolaroid(urlData.publicUrl, name, filePath, 0, fa
