@@ -208,11 +208,11 @@ body::before { content: ''; position: fixed; inset: 0; background: radial-gradie
     <h2>Carica un ricordo</h2>
     <p>Le tue foto dal telefono —<br>le vedremo tutti insieme qui sotto</p>
     <input type="text" class="name-input" id="uploader-name" placeholder="Il tuo nome (es. Marco e Sofia)" maxlength="40">
-    <div class="drop-zone" id="drop-zone">
-      <input type="file" id="file-input" accept="image/*" multiple>
+    <label for="file-input" class="drop-zone" id="drop-zone">
+      <input type="file" id="file-input" accept="image/*" multiple style="display:none">
       <p class="drop-zone-text">Tocca per scegliere le foto</p>
       <p class="drop-zone-sub">JPG, PNG, HEIC</p>
-    </div>
+    </label>
     <div class="preview-strip" id="preview-strip"></div>
     <button class="upload-btn" id="upload-btn" disabled>Carica le tue foto</button>
     <div class="progress-wrap" id="progress-wrap">
@@ -340,5 +340,4 @@ async function uploadFiles() {
       const { data: urlData } = db.storage.from(BUCKET).getPublicUrl(filePath);
       addPolaroid(urlData.publicUrl, name, filePath, 0, false);
       uploaded++;
-      pf.style.width = Math.round((uploaded / selectedFiles.length) * 100) + '%';
-      pl.textCont
+      pf.style.width = Math.round((uploaded / selectedFil
