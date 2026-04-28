@@ -269,7 +269,6 @@ const preview   = document.getElementById('preview-strip');
 const uploadBtn = document.getElementById('upload-btn');
 const nameInput = document.getElementById('uploader-name');
 
-dropZone.addEventListener('click', () => fileInput.click());
 dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
 dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
 dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
@@ -338,4 +337,6 @@ async function uploadFiles() {
       if (error) throw error;
 
       const { data: urlData } = db.storage.from(BUCKET).getPublicUrl(filePath);
-      addPolaroid(urlData.publicUrl, name, filePath, 0, fa
+      addPolaroid(urlData.publicUrl, name, filePath, 0, false);
+      uploaded++;
+      pf.style.width = Math.round((up
