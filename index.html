@@ -41,10 +41,10 @@ body::before { content: ''; position: fixed; inset: 0; background: radial-gradie
 .name-input { width: 100%; background: var(--cream); border: 1px solid var(--border); border-radius: 2px; padding: 0.65rem 1rem; font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: var(--text-dark); margin-bottom: 1rem; outline: none; transition: border-color 0.2s; }
 .name-input::placeholder { color: var(--accent-light); }
 .name-input:focus { border-color: var(--accent); }
-.drop-zone { border: 1.5px dashed var(--accent-light); border-radius: 3px; padding: 1.8rem 1rem; cursor: pointer; transition: all 0.25s; background: rgba(253,248,243,0.6); margin-bottom: 1rem; }
+.drop-zone { display: block; border: 1.5px dashed var(--accent-light); border-radius: 3px; padding: 1.8rem 1rem; cursor: pointer; transition: all 0.25s; background: rgba(253,248,243,0.6); margin-bottom: 1rem; text-align: center; width: 100%; position: relative; }
 .drop-zone:hover, .drop-zone.dragover { border-color: var(--accent); background: rgba(232,221,212,0.2); }
-.drop-zone-text { font-size: 0.88rem; color: var(--accent); font-style: italic; }
-.drop-zone-sub { font-size: 0.75rem; color: var(--accent-light); margin-top: 0.25rem; }
+.drop-zone-text { font-size: 0.88rem; color: var(--accent); font-style: italic; display: block; }
+.drop-zone-sub { font-size: 0.75rem; color: var(--accent-light); margin-top: 0.25rem; display: block; }
 #file-input { display: none; }
 .preview-strip { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; }
 .preview-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 2px; border: 1px solid var(--border); animation: popIn 0.3s ease; }
@@ -208,8 +208,8 @@ body::before { content: ''; position: fixed; inset: 0; background: radial-gradie
     <h2>Carica un ricordo</h2>
     <p>Le tue foto dal telefono —<br>le vedremo tutti insieme qui sotto</p>
     <input type="text" class="name-input" id="uploader-name" placeholder="Il tuo nome (es. Marco e Sofia)" maxlength="40">
-    <div class="drop-zone" id="drop-zone">
-      <input type="file" id="file-input" accept="image/*" multiple>
+    <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+      <input type="file" id="file-input" accept="image/*" multiple style="display:none">
       <p class="drop-zone-text">Tocca per scegliere le foto</p>
       <p class="drop-zone-sub">JPG, PNG, HEIC</p>
     </div>
@@ -269,11 +269,12 @@ const preview   = document.getElementById('preview-strip');
 const uploadBtn = document.getElementById('upload-btn');
 const nameInput = document.getElementById('uploader-name');
 
-dropZone.addEventListener('click', () => fileInput.click());
 dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
 dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
 dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
-fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+fileInput.addEventListener('change', function() { 
+  if (this.files && this.files.length > 0) handleFiles(this.files); 
+});
 nameInput.addEventListener('input', updateBtn);
 
 function handleFiles(files) {
@@ -298,7 +299,7 @@ async function compressImage(file) {
     const img = new Image();
     const url = URL.createObjectURL(file);
     img.onload = () => {
-      const MAX = 1200;
+      const MAX = 2000;
       let w = img.width, h = img.height;
       if (w > MAX || h > MAX) {
         if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
@@ -307,7 +308,7 @@ async function compressImage(file) {
       const canvas = document.createElement('canvas');
       canvas.width = w; canvas.height = h;
       canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      canvas.toBlob(blob => { URL.revokeObjectURL(url); resolve(blob); }, 'image/jpeg', 0.82);
+      canvas.toBlob(blob => { URL.revokeObjectURL(url); resolve(blob); }, 'image/jpeg', 0.90);
     };
     img.src = url;
   });
@@ -445,6 +446,8 @@ async function loadLikes() {
 }
 
 // ── LOAD GALLERY ──
+const loadedPaths = new Set();
+
 async function loadGallery() {
   try {
     const { data, error } = await db.storage.from(BUCKET).list('', {
@@ -468,8 +471,10 @@ async function loadGallery() {
       });
       if (!subFiles) continue;
       const uploaderName = folder.name.replace(/_/g, ' ');
-      subFiles.filter(f => f.name !== '.emptyFolderPlaceholder').forEach(f => {
+      subFiles.filter(f => f.name !== '.emptyFolderPlaceholder' && f.metadata?.size > 0).forEach(f => {
         const filePath = `${folder.name}/${f.name}`;
+        if (loadedPaths.has(filePath)) return; // Skip duplicates
+        loadedPaths.add(filePath);
         const { data: urlData } = db.storage.from(BUCKET).getPublicUrl(filePath);
         const likeCount = likesCache[filePath] || 0;
         const iLiked = !!likedByMe[filePath];
@@ -497,4 +502,3 @@ setInterval(loadLikes, 15000);
 </script>
 </body>
 </html>
-
